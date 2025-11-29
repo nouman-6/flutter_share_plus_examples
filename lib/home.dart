@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:cross_file/cross_file.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -92,6 +93,35 @@ class HomePage extends StatelessWidget {
                     );
                   },
                   child: Text('Share Dynamic'),
+                ),
+              ),
+            ),
+
+            Card(
+              child: ListTile(
+                leading: Icon(Icons.attach_file, color: Colors.orange),
+                title: Text('3. Share Single or Multiple Files'),
+                subtitle: Text('Shares local files (replace paths with actual file paths in your app).'),
+                trailing: ElevatedButton(
+                  onPressed: () async {
+                    // Note: In a real app, use actual file paths or assets.
+                    // For demo, we'll use placeholder paths - ensure files exist!
+                    final singleFile = XFile('path/to/single_image.jpg'); // e.g., from assets or storage
+                    final multipleFiles = [
+                      XFile('path/to/image1.png'),
+                      XFile('path/to/document.pdf'),
+                    ];
+                    final result = await SharePlus.instance.share(
+                      ShareParams(
+                        files: multipleFiles, // Or use [singleFile] for single
+                        text: 'Sharing some files via Flutter!',
+                      ),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Share result: ${result.status}')),
+                    );
+                  },
+                  child: Text('Share Files'),
                 ),
               ),
             ),
